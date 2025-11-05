@@ -107,28 +107,28 @@ public class QuestController {
 
     // Create a new quiz under a specific quest
     // Create a new quiz under a specific quest
-@PostMapping("/quests/{questId}/quiz")
-public ResponseEntity<String> createQuiz(@RequestBody Quiz newQuiz, @PathVariable Long questId) { 
-    Optional<Quest> questOp = questRepository.findById(questId);
-    if (questOp.isEmpty()) {
-        logger.warn("Quest not found for adding quiz: ID {}", questId); 
-        return new ResponseEntity<>("Quest not found", HttpStatus.NOT_FOUND);
+    @PostMapping("/quests/{questId}/quiz")
+    public ResponseEntity<String> createQuiz(@RequestBody Quiz newQuiz, @PathVariable Long questId) { 
+        Optional<Quest> questOp = questRepository.findById(questId);
+        if (questOp.isEmpty()) {
+            logger.warn("Quest not found for adding quiz: ID {}", questId); 
+            return new ResponseEntity<>("Quest not found", HttpStatus.NOT_FOUND);
+        }
+
+        Quest quest = questOp.get();
+        newQuiz.setQuest(quest);
+        quizRepository.save(newQuiz);
+        logger.info("New quiz added to quest ID {}: {}", questId, newQuiz.getTitle()); 
+        return new ResponseEntity<>("Quiz saved successfully", HttpStatus.CREATED);
     }
 
-    Quest quest = questOp.get();
-    newQuiz.setQuest(quest);
-    quizRepository.save(newQuiz);
-    logger.info("New quiz added to quest ID {}: {}", questId, newQuiz.getTitle()); 
-    return new ResponseEntity<>("Quiz saved successfully", HttpStatus.CREATED);
-}
 
+        // Added: Global exception handler (optional, for debugging)
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleException(Exception e) {
+            logger.error("An error occurred: {}", e.getMessage());
+            return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-    // Added: Global exception handler (optional, for debugging)
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception e) {
-        logger.error("An error occurred: {}", e.getMessage());
-        return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-}
 
