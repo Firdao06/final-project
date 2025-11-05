@@ -34,4 +34,5 @@ public class CharacterStatsUpdate {
     public void setHealth(int health) {
         this.health = health;
     }
+    
 }
