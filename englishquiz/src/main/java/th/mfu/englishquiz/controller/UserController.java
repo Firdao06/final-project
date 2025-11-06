@@ -1,20 +1,13 @@
 package th.mfu.englishquiz.controller;
 
-
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import th.mfu.englishquiz.entity.User;
 import th.mfu.englishquiz.repository.UserRepository;
@@ -30,30 +23,30 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Collection<User>> listUsers() {
         List<User> users = userRepository.findAll();
-        return new ResponseEntity<>(users,HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    //GET user by id
+    // GET user by ID (simplified fix)
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        if(!userRepository.existsById(id)){
-            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        userRepository.findById(id);
-        return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    //POST new user
+    // POST new user
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User newuser) {
-        userRepository.save(newuser);
+    public ResponseEntity<String> createUser(@RequestBody User newUser) {
+        userRepository.save(newUser);
         return new ResponseEntity<>("User created", HttpStatus.CREATED);
     }
 
-    //PUT update user
+    // PUT update user (uncommented and simplified)
     @PutMapping("/{id}")
-    /* 
-    public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             user.setUsername(updatedUser.getUsername());
@@ -61,19 +54,20 @@ public class UserController {
             user.setLevel(updatedUser.getLevel());
             user.setExperiencePoint(updatedUser.getExperiencePoint());
             user.setTotalScore(updatedUser.getTotalScore());
-            return userRepository.save(user);
+            userRepository.save(user);
+            return new ResponseEntity<>("User updated", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return null;
-    } */
+    }
 
     // DELETE user
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-
-        if(!userRepository.existsById(id)){
-            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!userRepository.existsById(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         userRepository.deleteById(id);
-        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("User deleted", HttpStatus.NO_CONTENT);
     }
 }
