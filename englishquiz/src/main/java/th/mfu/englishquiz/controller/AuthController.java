@@ -7,7 +7,7 @@ import th.mfu.englishquiz.entity.User;
 import th.mfu.englishquiz.dto.LoginRequest;
 import th.mfu.englishquiz.dto.RegisterRequest;
 import th.mfu.englishquiz.dto.AuthResponse;
-import th.mfu.englishquiz.dto.UserDTO;
+import th.mfu.englishquiz.dto.UserDto;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,7 +32,7 @@ public class AuthController {
         user.setTotalScore(0);
         userRepository.save(user);
 
-        UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getLevel(), user.getTotalScore());
+        UserDto userDTO = new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getLevel(), user.getTotalScore());
         return new AuthResponse(true, "Registration successful", userDTO);
     }
 
@@ -47,7 +47,7 @@ public class AuthController {
 
         // compare password
         if (user.getPassword().equals(request.getPassword())) {
-            UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getLevel(), user.getTotalScore());
+            UserDto userDTO = new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getLevel(), user.getTotalScore());
             return new AuthResponse(true, "Login successful", userDTO);
         } else {
             return new AuthResponse(false, "Incorrect password", null);

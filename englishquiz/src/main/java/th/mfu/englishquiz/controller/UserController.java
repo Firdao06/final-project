@@ -52,7 +52,6 @@ public class UserController {
             user.setUsername(updatedUser.getUsername());
             user.setEmail(updatedUser.getEmail());
             user.setLevel(updatedUser.getLevel());
-            user.setExperiencePoint(updatedUser.getExperiencePoint());
             user.setTotalScore(updatedUser.getTotalScore());
             userRepository.save(user);
             return new ResponseEntity<>("User updated", HttpStatus.OK);
