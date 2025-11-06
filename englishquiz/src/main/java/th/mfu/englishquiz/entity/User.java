@@ -21,9 +21,9 @@ public class User {
 
     private String username;
     private String email;
-    private String level;
-    private int experiencePoint;
+    private int level;
     private int totalScore;
+    private String Password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GameCharacter> characters;
@@ -51,23 +51,26 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
-    public void setLevel(String level) {
-        this.level = level;
+    public void setLevel(int level) {
+        this.level= level;
     }
-    public int getExperiencePoint() {
-        return experiencePoint;
-    }
-    public void setExperiencePoint(int experiencePoint) {
-        this.experiencePoint = experiencePoint;
-    }
+  
     public int getTotalScore() {
         return totalScore;
     }
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
     

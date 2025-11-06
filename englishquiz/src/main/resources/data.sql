@@ -1,9 +1,9 @@
 --  USER TABLE
-INSERT INTO users (id, username, email, level, experiencePoint, totalScore)
+INSERT INTO users (id, username, email, level, totalScore)
 VALUES 
-(1, 'Alice', 'alice@example.com', 'Beginner', 120, 300),
-(2, 'Bob', 'bob@example.com', 'Intermediate', 450, 800),
-(3, 'Charlie', 'charlie@example.com', 'Advanced', 900, 1500);
+(1, 'Alice', 'alice@example.com', 1, 3),
+(2, 'Bob', 'bob@example.com', 2, 3),
+(3, 'Charlie', 'charlie@example.com', 2,2);
 
 -- GAME CHARACTER TABLE
 INSERT INTO GameCharacter (id, name, classType, healthPoints, attackPower, defense, user_id)
