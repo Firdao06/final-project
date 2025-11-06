@@ -26,16 +26,7 @@ VALUES
 (2, 'Word Match Game', 'Vocabulary', 15, 'Matching', 2),
 (3, 'Audio Comprehension', 'Listening', 8, 'True/False', 3);
 
-CREATE TABLE question (
-    id BIGINT PRIMARY KEY,
-    questionText VARCHAR(500) NOT NULL,
-    correctAnswer VARCHAR(255) NOT NULL,
-    -- Foreign Key linking back to the QUIZ table
-    quiz_id BIGINT NOT NULL,
-    -- Assuming a Foreign Key constraint is needed:
-    -- FOREIGN KEY (quiz_id) REFERENCES quiz(id) 
-);
-
+-- QUESTION TABLE
 INSERT INTO question (id, questionText, correctAnswer, quiz_id)
 VALUES
 -- Questions for Quiz 1: Present Tense Test (Grammar)
