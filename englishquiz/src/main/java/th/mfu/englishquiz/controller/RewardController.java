@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import th.mfu.englishquiz.entity.GameCharacter;
-import th.mfu.englishquiz.entity.Quest;
+import th.mfu.englishquiz.entity.Quest; 
 import th.mfu.englishquiz.entity.Reward;
 import th.mfu.englishquiz.repository.RewardRepository;
 
